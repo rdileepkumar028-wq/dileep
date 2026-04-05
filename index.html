@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header, nav, .container, footer {
+      display: none; 
+    }
+    header {
+      background: #adc8f2;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      background: #444;
+      margin: 0;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+    }
+    section {
+      margin-bottom: 30px;
+    }
+    .profile {
+      text-align: center;
+    }
+    .profile img {
+      width: 150px;
+      border-radius: 50%;
+    }
+    .certificate-card {
+      background: #eee;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #333;
+      color: #fff;
+      margin-top: 20px;
+    }
+    button {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #555;
+    }
+    /* Login modal */
+    #loginModal {
+      display: flex; /* Show login first */
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    #loginBox {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+      text-align: center;
+    }
+    input {
+      width: 90%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .skills-list {
+      text-align: left;
+      display: inline-block;
+    }
+    .skills-list label {
+      display: flex;
+      align-items: center;
+      margin: 8px 0;
+    }
+    .skills-list img {
+      margin-right: 8px;
+      width: 30px;
+    }
+    #skillsMessage {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    #certificateList {
+      list-style: none;
+      padding: 0;
+    }
+    #certificateList li {
+      background: #eee;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Portfolio</h1>
+    <p>Welcome to my profile!</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certificates">Certificates</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <section id="about" class="profile">
+      <img src="./dileep.png.jpg" alt="Profile Picture">
+      <h2>R.Dileep Kumar</h2>
+      <p>This is My Profile. Explore my certificates, skills,</p>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="skills-list">
+        <label><input type="checkbox" value="HTML">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg"> HTML
+        </label>
+        <label><input type="checkbox" value="CSS">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/CSS3_logo.svg"> CSS
+        </label>
+        <label><input type="checkbox" value="JavaScript">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"> JavaScript
+        </label>
+        <label><input type="checkbox" value="React">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"> React
+        </label>
+        <label><input type="checkbox" value="Node.js">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg"> Node.js
+        </label>
+        <label><input type="checkbox" value="UI/UX Design">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg"> UI/UX Design
+        </label>
+      </div>
+      <br>
+      <button onclick="submitSkills()">Submit Skills</button>
+      <p id="skillsMessage"></p>
+    </section>
+
+    <section id="certificates">
+      <h2>Certificates</h2>
+      <ul id="certificateList"></ul>
+      <br>
+      <input type="file" id="certificateUpload" accept=".pdf,.jpg,.png">
+      <button onclick="uploadCertificate()">Upload Certificate</button>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <p>Email: rdileepkumar028@gamil.com</p>
+    </section>
+  </div>
+  
+  <!-- Login Modal -->
+  <div id="loginModal">
+    <div id="loginBox">
+      <h2>Login</h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="login()">Submit</button>
+      <p id="loginMessage"></p>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      if(user === "admin" && pass === "1234") {
+        document.getElementById("loginMessage").innerText = "Login successful!";
+        // Hide login modal
+        document.getElementById("loginModal").style.display = "none";
+        // Show portfolio content
+        document.querySelector("header").style.display = "block";
+        document.querySelector("nav").style.display = "block";
+        document.querySelector(".container").style.display = "block";
+        document.querySelector("footer").style.display = "block";
+      } else {
+        document.getElementById("loginMessage").innerText = "Invalid credentials.";
+      }
+    }
+
+    function submitSkills() {
+      const selected = Array.from(document.querySelectorAll(".skills-list input:checked"))
+                            .map(skill => skill.value);
+
+      const message = document.getElementById("skillsMessage");
+
+      if (selected.length > 0) {
+        message.innerText = "You selected: " + selected.join(", ");
+        message.style.color = "green";
+      } else {
+        message.innerText = "No skills selected!";
+        message.style.color = "red";
+      }
+    }
+
+    function uploadCertificate() {
+      const fileInput = document.getElementById("certificateUpload");
+      const file = fileInput.files[0];
+
+      if (file) {
+        const list = document.getElementById("certificateList");
+        const listItem = document.createElement("li");
+        listItem.textContent = file.name;
+        list.appendChild(listItem);
+
+        fileInput.value = ""; // reset input
+        alert("Certificate uploaded: " + file.name);
+      } else {
+        alert("Please select a file to upload.");
+      }
+    }
+  </script>
+</body>
+</html>
